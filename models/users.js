@@ -12,3 +12,12 @@ async function init(){
         console.error(err);
     }
 }
+
+init();
+
+async function getUsers(username, password){
+    let result = await db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username], [password]);
+    return result;
+}
+
+module.exports = getUsers;
