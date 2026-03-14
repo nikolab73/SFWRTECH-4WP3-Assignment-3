@@ -16,8 +16,8 @@ async function init(){
 init();
 
 async function getUsers(username, password){
-    let result = await db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username], [password]);
+    let result = await db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password]);
     return result;
 }
 
-module.exports = getUsers;
+module.exports = {getUsers};

@@ -1,6 +1,7 @@
 const express = require('express');
 var router = express.Router()
 const ArticlesModel = require('../models/articles.js')
+const usersModel = require('../models/users.js');
 
 // Displays the login page
 router.get("/", async function(req, res)
@@ -15,26 +16,20 @@ router.get("/", async function(req, res)
 
 // Attempts to login a user
 // - The action for the form submit on the login page.
-router.post("/attemptlogin", async function(req, res)
-{
+router.post("/attemptlogin", async function(req, res) {
+  let user = await usersModel.getUsers(req.body.username, req.body.password);
+  console.log(user);
 
-  // is the username and password OK?
-  if (req.body.username == "bob" &&
-      req.body.password == "test")
-  {
-    // set a session key username to login the user
-    req.session.username = req.body.username;
+  if(user) { // store new user and pass
+    req.session.username = user.username;
+    req.session.level = user.level;
 
-    // re-direct the logged-in user to the members page
-    res.redirect("/members");
-  }
-  else
-  {
-    // if we have an error, reload the login page with an error
+    if (user.level === "editor") res.redirect("/editors");
+    else res.redirect("/members");
+  } else { // if we have an error, reload the login page with an error
     req.session.login_error = "Invalid username and/or password!";
     res.redirect("/login");
   }
-
 });
 
 // Logout a user
