@@ -20,4 +20,8 @@ async function getUsers(username, password){
     return result;
 }
 
-module.exports = {getUsers};
+async function addUser(username, password){
+    await db.run("INSET INTO Users VALUES (?,?,?)", [username, password, "member"]);
+}
+
+module.exports = {getUsers, addUser};
