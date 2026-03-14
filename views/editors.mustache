@@ -21,7 +21,7 @@
           <td>{{username}}</td>
           <td>{{password}}</td>
           <td>{{level}}</td>
-          <td><a href="/deleteUser">D</a></td>
+          <td><a href="/editors/deleteUser/{{username}}">D</a></td>
         </tr>
         {{/users}}
       </table>
@@ -37,7 +37,7 @@
         <tr>
           <td>{{title}}</td>
           <td>{{username}}</td>
-          <td><a href="/deleteArticle">D</a></td>
+          <td><a href="/editors/deleteArticle/{{title}}/{{username}}">D</a></td>
         </tr>
         {{/articles}}
       </table>
