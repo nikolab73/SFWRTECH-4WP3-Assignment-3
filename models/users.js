@@ -30,13 +30,17 @@ async function addUser(username, password){
 }
 
 async function checkForUser(username){
-    let existent = db.get("SELECT * FROM users WHERE username = ?", [username]);
+    let existent = db.get("SELECT * FROM Users WHERE username = ?", [username]);
     return existent;
 }
 
 async function getAllUsers(){
-    let all = await db.get("SELECT * FROM users");
+    let all = await db.all("SELECT * FROM Users");
     return all;
 }
 
-module.exports = {getUsers, addUser, checkForUser, getAllUsers};
+async function deleteUser(username) {
+    await db.run("DELETE FROM Users WHERE username = ?", [username]);
+}
+
+module.exports = {getUsers, addUser, checkForUser, getAllUsers, deleteUser};
