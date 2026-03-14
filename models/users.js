@@ -17,7 +17,7 @@ async function init(){
 init();
 
 async function getUsers(username, password){
-    let user = await db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password]);
+    let user = await db.get("SELECT * FROM users WHERE username = ?", [username]);
     if (!user) return null;
     let match = await bcrypt.compare(password, user.password);
     if (match) return user;

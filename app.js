@@ -59,6 +59,11 @@ app.use("/members", function(req,res,next) {
 
 });
 
+app.use("/editors", function(req,res,next) {
+        if(req.session.username && req.session.level === "editor") next();
+        else res.redirect("/home");
+});
+
 // Include Controllers
 //
 // - We define all of our routes inside our controllers, and include them in
