@@ -1,0 +1,25 @@
+{{>header}}
+
+{{>navigation}}
+
+<h1>Sign-up</h1>
+
+{{#signup_success}}
+<p>User account created! <a href="/login">Login</a> to access your new account.</p>
+{{/signup_success}}
+
+{{#signup_error}}
+<p style="color:red;">{{signup_error}}</p>
+{{/signup_error}}
+
+{{^signup_success}}
+<form action="/login/attemptsignup" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username"> <br /> <br />
+    <label for="password">Password:</label>
+    <input type="text" name="password"> <br /> <br />
+    <button type="submit">Sign up</button>
+</form>
+{{/signup_success}}
+
+{{> footer}}

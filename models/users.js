@@ -21,7 +21,7 @@ async function getUsers(username, password){
 }
 
 async function addUser(username, password){
-    await db.run("INSET INTO Users VALUES (?,?,?)", [username, password, "member"]);
+    await db.run("INSERT INTO Users VALUES (?,?,?)", [username, password, "member"]);
 }
 
 module.exports = {getUsers, addUser};
