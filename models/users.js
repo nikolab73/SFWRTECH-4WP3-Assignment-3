@@ -1,5 +1,6 @@
 const sqlLite = require('sqlite');
 const sqlLite3 = require('sqlite3');
+const bcrypt = require('bcrypt')
 
 async function init(){
     try{
@@ -16,12 +17,21 @@ async function init(){
 init();
 
 async function getUsers(username, password){
-    let result = await db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password]);
-    return result;
+    let user = await db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password]);
+    if (!user) return null;
+    let match = await bcrypt.compare(password, user.password);
+    if (match) return user;
+    else return null;
 }
 
 async function addUser(username, password){
-    await db.run("INSERT INTO Users VALUES (?,?,?)", [username, password, "member"]);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await db.run("INSERT INTO Users VALUES (?,?,?)", [username, hashedPassword, "member"]);
 }
 
-module.exports = {getUsers, addUser};
+async function checkForUser(username){
+    let existent = db.get("SELECT * FROM users WHERE username = ?", [username]);
+    return existent;
+}
+
+module.exports = {getUsers, addUser, checkForUser};

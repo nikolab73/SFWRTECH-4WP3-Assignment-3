@@ -44,8 +44,8 @@ router.get("/logout", async function(req, res)
 // Display the signup page
 router.get("/signup", async function(req, res) {
     req.TPL.signup_error = req.session.signup_error;
-    req.session.signup_error = "";
     req.TPL.signup_success = req.session.signup_success;
+    req.session.signup_error = "";
     req.session.signup_success = false;
     res.render("signup", req.TPL);
 });
@@ -59,9 +59,14 @@ router.post("/attemptsignup", async function(req, res) {
         req.session.signup_error = "Username/password cannot be less than 6 characters in length!";
         res.redirect("/login/signup");
     } else {
-        await usersModel.addUser(username, password);
-        req.session.signup_success = true;
+      let existingUser = await usersModel.checkForUser(username);
+      if(existingUser) {
+        req.session.signup_error = "Username is in use, please choose another"
         res.redirect("/login/signup");
+      }
+      await usersModel.addUser(username, password);
+      req.session.signup_success = true;
+      res.redirect("/login/signup");
     }
 });
 
