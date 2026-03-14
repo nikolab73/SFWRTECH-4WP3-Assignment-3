@@ -34,4 +34,9 @@ async function checkForUser(username){
     return existent;
 }
 
-module.exports = {getUsers, addUser, checkForUser};
+async function getAllUsers(){
+    let all = await db.get("SELECT * FROM users");
+    return all;
+}
+
+module.exports = {getUsers, addUser, checkForUser, getAllUsers};
