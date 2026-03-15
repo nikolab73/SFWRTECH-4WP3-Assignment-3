@@ -1,0 +1,8 @@
+Commit 2d0c0acdaf13afd40883ed42abd228201873811b:
+Here is the implementation of hashed passwords and comparing inputs on log in with existing db users. The challenge here was editing my getUsers function to check for the users account using a hashed password. I learned about bcrypt functions using the provided link and learned how to do bcrypt.hash and bcrypt.compare. I used these functions to output to console and figured out how I could compare hashed passwords with new input passwords.
+
+Commit a6905e9befbd4fb4e7f5d33b841b3473d4b1aed5:
+This is where I made the logger.js file. Here I use fs and path. The challenge here was learning to implement express middleware and file operations. The logging function itself was easy as most of it was given in the assignment page and other parts of starter code could be used as reference (for example learning to pass req, res, next). I made some errors here, which I will talk about in the next paragraph.
+
+Commit 807dc2e0f0fed30bd6e1d56c4d95435ec493bb49:
+In this section I ran into a few issues, as seen by the logs in log.txt. I had lowercase date() to retrieve the date, I had uppercase ip to retrieve the request IP, I had lowercase JSON to stringify the request body, and lastly I had single quote instead of backtick when building the string of the request. The first thing I looked into was why my logLine string was not showing the literals embedded in, this was obviously due to the single quote. From there, I was able to look at the logs and see which values were not displaying what I wanted. I quickly narrowed down the typos and fixed the code.
